@@ -17,33 +17,35 @@
 body {
     background-color: var(--bg-color);
     color: var(--text);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    overflow: hidden; /* Mencegah scroll body */
+    /* Hapus height: 100vh agar layar bisa di-scroll normal */
+    min-height: 100vh;
+    padding-top: 70px; /* Ruang untuk Header di atas */
+    padding-bottom: 90px; /* Ruang untuk Input di bawah */
 }
 
 .app-container {
     width: 100%;
-    max-width: 600px; /* Tampilan mobile di layar besar */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--chat-bg);
+    max-width: 600px;
+    margin: 0 auto;
     position: relative;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-/* Header */
+/* --- HEADER (Ditempel di Atas) --- */
 header {
-    padding: 15px 20px;
-    background: rgba(30, 41, 59, 0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+    background: rgba(30, 41, 59, 0.95);
     border-bottom: 1px solid #334155;
     display: flex;
     justify-content: space-between;
     align-items: center;
     backdrop-filter: blur(10px);
-    z-index: 10;
+    z-index: 1000; /* Pastikan selalu di paling atas */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .logo {
@@ -53,10 +55,7 @@ header {
     align-items: center;
     gap: 10px;
 }
-
-.logo span {
-    color: var(--primary);
-}
+.logo span { color: var(--primary); }
 
 .status-dot {
     width: 10px;
@@ -66,15 +65,13 @@ header {
     box-shadow: 0 0 10px #10b981;
 }
 
-/* Chat Container */
+/* --- CHAT AREA (Bisa di-scroll) --- */
 .chat-container {
-    flex: 1;
     padding: 20px;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    scroll-behavior: smooth;
+    /* overflow auto dihapus agar pakai scroll bawaan HP */
 }
 
 /* Bubbles */
@@ -83,15 +80,8 @@ header {
     flex-direction: column;
     max-width: 85%;
 }
-
-.message.user {
-    align-self: flex-end;
-    align-items: flex-end;
-}
-
-.message.ai {
-    align-self: flex-start;
-}
+.message.user { align-self: flex-end; align-items: flex-end; }
+.message.ai { align-self: flex-start; }
 
 .bubble {
     padding: 12px 16px;
@@ -100,20 +90,18 @@ header {
     line-height: 1.5;
     word-wrap: break-word;
 }
-
 .message.user .bubble {
     background-color: var(--user-bubble);
     color: white;
     border-bottom-right-radius: 2px;
 }
-
 .message.ai .bubble {
     background-color: var(--ai-bubble);
     color: #f1f5f9;
     border-bottom-left-radius: 2px;
 }
 
-/* Citations / Referensi Style */
+/* Citations */
 .citations {
     margin-top: 10px;
     font-size: 0.8rem;
@@ -132,16 +120,23 @@ header {
     text-overflow: ellipsis;
 }
 
-/* Input Area */
+/* --- INPUT AREA (Ditempel di Bawah) --- */
 .input-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     padding: 15px;
     background-color: var(--chat-bg);
     border-top: 1px solid #334155;
+    z-index: 1000; /* Pastikan selalu muncul di atas konten lain */
 }
 
 #chat-form {
     display: flex;
     gap: 10px;
+    max-width: 600px; /* Agar rapi di layar lebar */
+    margin: 0 auto;
 }
 
 input {
@@ -152,12 +147,9 @@ input {
     background-color: #0f172a;
     color: white;
     outline: none;
-    transition: 0.3s;
+    font-size: 16px; /* Mencegah zoom otomatis di iPhone */
 }
-
-input:focus {
-    border-color: var(--primary);
-}
+input:focus { border-color: var(--primary); }
 
 button {
     background-color: var(--primary);
@@ -166,23 +158,12 @@ button {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.2s;
 }
 
-button:active {
-    transform: scale(0.95);
-}
-
-button:disabled {
-    background-color: #475569;
-    cursor: not-allowed;
-}
-
-/* Loading Animation */
+/* Loading */
 .typing-indicator {
     font-style: italic;
     font-size: 0.8rem;
