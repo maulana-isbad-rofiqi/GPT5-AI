@@ -44,7 +44,8 @@ chatForm.addEventListener('submit', async (e) => {
 
     try {
         // 3. Request ke API (Sama seperti script bot WA)
-        const apiUrl = `https://theresapis.vercel.app/ai/copilot?message=${encodeURIComponent(text)}&model=gpt-5`;
+        // Menggunakan API internal Vercel kita sendiri
+        const apiUrl = `/api/chat?message=${encodeURIComponent(text)}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
